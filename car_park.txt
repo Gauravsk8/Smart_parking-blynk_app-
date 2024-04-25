@@ -1,0 +1,37 @@
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2); // Define the LCD connections
+
+const int sensor1Pin = 7; // Connect first IR sensor to digital pin 7
+const int sensor2Pin = 6; // Connect second IR sensor to digital pin 6
+
+void setup() {
+  lcd.begin(16, 2); // Initialize the LCD
+  lcd.setCursor(0, 0);
+  lcd.print("Parking Status:");
+  pinMode(sensor1Pin, INPUT);
+  pinMode(sensor2Pin, INPUT);
+}
+
+void loop() {
+  int car1Status = digitalRead(sensor1Pin); // Read the status of the first sensor
+  int car2Status = digitalRead(sensor2Pin); // Read the status of the second sensor
+
+  lcd.setCursor(0, 1); // Set the cursor to the second line
+  lcd.print("Slot 1: ");
+  if (car1Status == HIGH) {
+    lcd.print("Occupied");
+  } else {
+    lcd.print("Vacant");
+  }
+
+  lcd.setCursor(0, 2); // Set the cursor to the third line
+  lcd.print("Slot 2: ");
+  if (car2Status == HIGH) {
+    lcd.print("Occupied ");
+  } else {
+    lcd.print("Vacant");
+  }
+
+  delay(1000); // Update the display every 1 second
+}
